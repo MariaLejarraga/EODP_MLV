@@ -11,7 +11,7 @@ refoutdir= '/home/luss/my_shared_folder/EODP_TER/EODP-TS-L1B/output/'
 reftoa= readToa(refoutdir, "l1b_toa_VNIR-0.nc")
 
 difftoa= np.max(np.abs(mytoa-reftoa))
-print(difftoa)
+print('difftoa=', difftoa)
 
 #PLOT
 idalt= 50
