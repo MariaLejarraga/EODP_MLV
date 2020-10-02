@@ -91,6 +91,17 @@ class mtf:
         """
 
         # TODO
+        fc= D/(lambd*focal)
+        fstepALT= 1/(w*nlines)
+        fstepACT= 1/(w*ncolumns)
+        fALT= np.arange(-1/(2*w),1/(2*w),fstepALT)
+        fACT= np.arange(-1/(2*w),1/(2*w), fstepACT)
+        fnAct= fACT/(1/w)
+        fnAlt= fALT/(1/w)
+        [fnAltxx,fnActxx] = np.meshgrid(fnAlt,fnAct,indexing='ij')
+        fn2D=np.sqrt(fnAltxx*fnAltxx + fnActxx*fnActxx)
+        [frAltxx,frActxx] = np.meshgrid(fALT/fc,fACT/fc,indexing='ij');
+        fr2D=np.sqrt(frAltxx*frAltxx + frActxx*frActxx)
 
         return fn2D, fr2D, fnAct, fnAlt
 
@@ -105,8 +116,12 @@ class mtf:
             return math.acos(x)
         acosv = np.vectorize(acosf)
         # TODO
-        return Hdiff
+        if fr2D<fc
+           Hdiff=(2/pi)*(acosf(fr2D)-fr2D*(1-(fr2D)**2)**(1/2))
+            else
+           Hdiff= 0
 
+        return Hdiff
 
     def mtfDefocus(self, fr2D, defocus, focal, D):
         """
@@ -118,6 +133,9 @@ class mtf:
         :return: Defocus MTF
         """
         # TODO
+        x= pi*(defocus/(focal/D))*fr2D*(1-fr2D)
+        j1= (x/2)+(x**3/16)+(x**5/384)-(x**7/18432)
+        Hdefoc= (2* j1)/x
         return Hdefoc
 
     def mtfWfeAberrations(self, fr2D, lambd, kLF, wLF, kHF, wHF):
@@ -132,6 +150,7 @@ class mtf:
         :return: WFE Aberrations MTF
         """
         # TODO
+        Hwfe= np.exp(-fr2D*(1-fr2D)*((kLF*(wLF/lambd)**2)+(kHF*(wHF/lambd)**2)))
         return Hwfe
 
     def mtfDetector(self,fn2D):
@@ -141,6 +160,7 @@ class mtf:
         :return: detector MTF
         """
         # TODO
+        
         return Hdet
 
     def mtfSmearing(self, fnAlt, ncolumns, ksmear):
