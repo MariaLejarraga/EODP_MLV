@@ -53,15 +53,15 @@ class opticalPhase(initIsm):
         # Spatial filter
         # -------------------------------------------------------------------------------
         # Calculation and application of the system MTF
-        #self.logger.info("EODP-ALG-ISM-1030: Spatial modelling. PSF/MTF")
-        #myMtf = mtf(self.logger)
-        #Hsys = myMtf.system_mtf(toa.shape[0], toa.shape[1],
-         #                       self.ismConfig.D, self.ismConfig.wv[getIndexBand(band)], self.ismConfig.f, self.ismConfig.pix_size,
-          #                      self.ismConfig.kLF, self.ismConfig.wLF, self.ismConfig.kHF, self.ismConfig.wHF,
-           #                     self.ismConfig.defocus, self.ismConfig.ksmear, self.ismConfig.kmotion,
-            #                    self.outdir, band)
+        self.logger.info("EODP-ALG-ISM-1030: Spatial modelling. PSF/MTF")
+        myMtf = mtf(self.logger)
+        Hsys = myMtf.system_mtf(toa.shape[0], toa.shape[1],
+                                self.ismConfig.D, self.ismConfig.wv[getIndexBand(band)], self.ismConfig.f, self.ismConfig.pix_size,
+                                self.ismConfig.kLF, self.ismConfig.wLF, self.ismConfig.kHF, self.ismConfig.wHF,
+                                self.ismConfig.defocus, self.ismConfig.ksmear, self.ismConfig.kmotion,
+                                self.outdir, band)
 
-        #toa = self.applySysMtf(toa, Hsys) # always calculated
+        toa = self.applySysMtf(toa, Hsys) # always calculated
 
         self.logger.debug("TOA [0,0] " +str(toa[0,0]) + " [e-]")
 
@@ -105,8 +105,13 @@ class opticalPhase(initIsm):
         :return: TOA image in irradiances [mW/m2]
         """
         # TODO
+        toa_fft= fft2(toa)
+        Toa_mft= toa_fft*fftshift(Hsys)
+        toa_ft= ifft2(Toa_mft)
+        imagin_toaMTF=np.imag(toa_ft)
+        print(imagin_toaMTF)
 
-        return toa_ft
+        return np.real(toa_ft)
 
     def spectralIntegration(self, sgm_toa, sgm_wv, band):
         """

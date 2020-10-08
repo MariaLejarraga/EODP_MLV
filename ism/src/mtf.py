@@ -68,7 +68,7 @@ class mtf:
         # Calculate the System MTF
         self.logger.debug("Calculation of the Sysmtem MTF by multiplying the different contributors")
         # TODO
-        # Hsys = ...
+        Hsys = Hdiff*Hdefoc*Hwfe*Hdet*Hsmear*Hmotion
 
         # Plot cuts ACT/ALT of the MTF
         self.plotMtf(Hdiff, Hdefoc, Hwfe, Hdet, Hsmear, Hmotion, Hsys, nlines, ncolumns, fnAct, fnAlt, directory, band)
@@ -92,10 +92,10 @@ class mtf:
 
         # TODO
         fc= D/(lambd*focal)
-        fstepALT= 1/(w*nlines)
-        fstepACT= 1/(w*ncolumns)
-        fALT= np.arange(-1/(2*w),1/(2*w),fstepALT)
-        fACT= np.arange(-1/(2*w),1/(2*w), fstepACT)
+        fstepALT= 1/nlines/w
+        fstepACT= 1/ncolumns/w
+        fALT= np.arange(-1/(2*w),1/(2*w)-fstepALT/2,fstepALT)
+        fACT= np.arange(-1/(2*w),1/(2*w)-fstepACT/2, fstepACT)
         fnAct= fACT/(1/w)
         fnAlt= fALT/(1/w)
         [fnAltxx,fnActxx] = np.meshgrid(fnAlt,fnAct,indexing='ij')
@@ -115,11 +115,8 @@ class mtf:
         def acosf(x):
             return math.acos(x)
         acosv = np.vectorize(acosf)
-        # TODO
-        if fr2D<fc
-           Hdiff=(2/pi)*(acosf(fr2D)-fr2D*(1-(fr2D)**2)**(1/2))
-            else
-           Hdiff= 0
+        Hdiff=(2/pi)*(acosv(fr2D)-fr2D*(1-(fr2D)**2)**(1/2))
+        Hdiff[fr2D*fr2D>1]=0
 
         return Hdiff
 
@@ -160,7 +157,7 @@ class mtf:
         :return: detector MTF
         """
         # TODO
-        
+        Hdet= abs(np.sinc(fn2D))
         return Hdet
 
     def mtfSmearing(self, fnAlt, ncolumns, ksmear):
@@ -172,6 +169,9 @@ class mtf:
         :return: Smearing MTF
         """
         # TODO
+        smearAlt= np.zeros((len(fnAlt),1))
+        smearAlt[:,0]= np.sinc(fnAlt*ksmear)
+        Hsmear= repmat(smearAlt, 1, ncolumns)
         return Hsmear
 
     def mtfMotion(self, fn2D, kmotion):
@@ -182,6 +182,7 @@ class mtf:
         :return: detector MTF
         """
         # TODO
+        Hmotion= np.sinc(kmotion*fn2D)
         return Hmotion
 
     def plotMtf(self,Hdiff, Hdefoc, Hwfe, Hdet, Hsmear, Hmotion, Hsys, nlines, ncolumns, fnAct, fnAlt, directory, band):
