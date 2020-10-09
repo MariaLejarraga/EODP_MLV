@@ -105,6 +105,9 @@ class detectionPhase(initIsm):
         :return: Toa in photons
         """
         # TODO
+        Ein= toa* area_pix*tint
+        Ephotons= (self.constants.h_planck*self.constants.speed_light)/wv
+        toa_ph= Ein/Ephotons
         return toa_ph
 
     def phot2Electr(self, toa, QE):
@@ -115,7 +118,7 @@ class detectionPhase(initIsm):
         :return: toa in electrons
         """
         # TODO
-
+        toae= toa*QE
         return toae
 
     def badDeadPixels(self, toa,bad_pix,dead_pix,bad_pix_red,dead_pix_red):
@@ -129,6 +132,15 @@ class detectionPhase(initIsm):
         :return: toa in e- including bad & dead pixels
         """
         # TODO
+        n_bad= np.round((bad_pix/100)*toa.shape[1])
+        step_bad= int(toa.shape[1]/n_bad)
+        idx_bad= range(5, toa.shape[1], step_bad)
+        toa[idx_bad,:]= toa[idx_bad,:]-bad_pix_red
+        n_dead= np.round((dead_pix/100)*toa.shape[1])
+        step_dead= int(toa.shape[1]/n_dead)
+        idx_dead= range(5, toa.shape[1], step_dead)
+        toa[idx_dead,:]= toa[idx_dead,:]-dead_pix_red
+
 
         return toa
 
@@ -141,14 +153,17 @@ class detectionPhase(initIsm):
         """
         # Calculate the 1D PRNU ACT
         # TODO
+        np.random.seed(self.ismConfig.seed)
+        prnu_eff = kprnu*np.random.normal(0, 1, toa.shape[1])
 
         # Apply PRNU to the input TOA
         # TODO
-
+        for ialt in range(toa.shape[0]):
+            toa[ialt,:] = toa[ialt,:]*(1+prnu_eff)
         return toa
 
 
-    def darkSignal(self, toa, kdsnu, T, Tref, ds_A_coeff, ds_B_coeff):
+    def darkSignal(self, toa, kdsnu, T, Tref, ds_A_coeff, ds_B_coeff, DS=None):
         """
         Dark signal simulation
         :param toa: TOA in [e-]
@@ -161,10 +176,15 @@ class detectionPhase(initIsm):
         """
         # Calculate the 1D DS ACT
         # TODO
+        DSNU = np.random.normal(0, 1, toa.shape[1])*kdsnu
+        ds= ds_A_coeff*((T/Tref)**3)*exp(-ds_B_coeff*((1/T)-(1/Tref)))
 
         self.logger.debug("Dark signal Sd " + str(ds) + " [e-]")
 
         # Apply DSNU to the input TOA
         # TODO
+        for ialt in range(toa.shape[0]):
+            DS[ialt]= ds*(1+DSNU)
+            toa[ialt,:] = toa[ialt,:]+(DS[ialt])
 
         return toa

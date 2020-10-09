@@ -31,14 +31,14 @@ class ism(initIsm):
             toa = myOpt.compute(sgm_toa, sgm_wv, band)
 
             # Detection Stage
-            # -------------------------------------------------------------------------------
-            #myDet = detectionPhase(self.auxdir, self.indir, self.outdir)
-            #toa = myDet.compute(toa, band)
+            -------------------------------------------------------------------------------
+            myDet = detectionPhase(self.auxdir, self.indir, self.outdir)
+            toa = myDet.compute(toa, band)
 
             # Video Chain Phase
             # -------------------------------------------------------------------------------
             #myVcu = videoChainPhase(self.auxdir, self.indir, self.outdir)
-            #toa = myVcu.compute(toa, band)
+#            toa = myVcu.compute(toa, band)
 
             # Write output TOA
             # -------------------------------------------------------------------------------
