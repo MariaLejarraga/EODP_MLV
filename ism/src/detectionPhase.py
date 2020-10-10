@@ -132,14 +132,21 @@ class detectionPhase(initIsm):
         :return: toa in e- including bad & dead pixels
         """
         # TODO
-        n_bad= np.round((bad_pix/100)*toa.shape[1])
-        step_bad= int(toa.shape[1]/n_bad)
-        idx_bad= range(5, toa.shape[1], step_bad)
-        toa[idx_bad,:]= toa[idx_bad,:]-bad_pix_red
-        n_dead= np.round((dead_pix/100)*toa.shape[1])
-        step_dead= int(toa.shape[1]/n_dead)
-        idx_dead= range(5, toa.shape[1], step_dead)
-        toa[idx_dead,:]= toa[idx_dead,:]-dead_pix_red
+        nbad= int(np.round((bad_pix/100)*toa.shape[1]*toa.shape[0]))
+        step_bad= int(np.round(toa.shape[1]/nbad))
+        print(step_bad)
+        idx_bad= range(0, toa.shape[1]+1, step_bad)
+        file= open('/home/luss/my_shared_folder/output_ism/bad_index.txt','w')
+        for seq in range(0, toa.shape[1]+1, step_bad):
+            print(seq)
+            file.write(str(seq))
+        file.close()
+        toa[:,idx_bad]= toa[:,idx_bad]*(1-bad_pix_red)
+
+
+        step_dead= int(np.round(toa.shape[1]/(dead_pix/100)))
+        idx_dead= range(0, toa.shape[1], step_dead)
+        toa[idx_dead,:]= toa[idx_dead,:]*(1-dead_pix_red)
 
 
         return toa
@@ -177,14 +184,13 @@ class detectionPhase(initIsm):
         # Calculate the 1D DS ACT
         # TODO
         DSNU = np.random.normal(0, 1, toa.shape[1])*kdsnu
-        ds= ds_A_coeff*((T/Tref)**3)*exp(-ds_B_coeff*((1/T)-(1/Tref)))
+        ds= ds_A_coeff*((T/Tref)**3)*np.exp(-ds_B_coeff*((1/T)-(1/Tref)))
 
         self.logger.debug("Dark signal Sd " + str(ds) + " [e-]")
 
         # Apply DSNU to the input TOA
         # TODO
         for ialt in range(toa.shape[0]):
-            DS[ialt]= ds*(1+DSNU)
-            toa[ialt,:] = toa[ialt,:]+(DS[ialt])
-
+            #DS[ialt]= ds*(1+DSNU)
+            toa[ialt,:] = toa[ialt,:]+ds*(1+DSNU)
         return toa
