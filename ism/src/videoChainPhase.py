@@ -73,8 +73,9 @@ class videoChainPhase(initIsm):
 
         # Make sure DN is not above the saturation level
         # TODO
-        if toa_dn>(2*bit_depth-1):
+        if np.any(toa_dn>(2*bit_depth-1)):
             print('WRONG')
-
+        #np.any(toa_dn<=(2*bit_depth-1))
+         #   print(True)
         return toa_dn
 

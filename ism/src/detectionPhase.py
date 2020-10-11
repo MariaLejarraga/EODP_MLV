@@ -132,21 +132,28 @@ class detectionPhase(initIsm):
         :return: toa in e- including bad & dead pixels
         """
         # TODO
-        nbad= int(np.round((bad_pix/100)*toa.shape[1]*toa.shape[0]))
-        step_bad= int(np.round(toa.shape[1]/nbad))
+        nbad= int(np.round((bad_pix/100)*toa.shape[1]))
+        step_bad= int(np.round(100/bad_pix))
         print(step_bad)
-        idx_bad= range(0, toa.shape[1]+1, step_bad)
+        idx_bad= range(0, toa.shape[1], step_bad)
         file= open('/home/luss/my_shared_folder/output_ism/bad_index.txt','w')
-        for seq in range(0, toa.shape[1]+1, step_bad):
+        for seq in range(0, toa.shape[1], step_bad):
             print(seq)
-            file.write(str(seq))
+            file.write(str(seq)+'\n')
         file.close()
         toa[:,idx_bad]= toa[:,idx_bad]*(1-bad_pix_red)
 
-
-        step_dead= int(np.round(toa.shape[1]/(dead_pix/100)))
+        ndead= int(np.round((dead_pix/100)*toa.shape[1]))
+        step_dead= int(np.round(100/dead_pix))
+        print(step_dead)
         idx_dead= range(0, toa.shape[1], step_dead)
-        toa[idx_dead,:]= toa[idx_dead,:]*(1-dead_pix_red)
+        file= open('/home/luss/my_shared_folder/output_ism/dead_index.txt','w')
+        for seq in range(0, toa.shape[1], step_dead):
+            print(seq)
+            file.write(str(seq)+'\n')
+        file.close()
+        toa[:,idx_dead]= toa[:,idx_dead]*(1-dead_pix_red)
+
 
 
         return toa
