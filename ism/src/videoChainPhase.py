@@ -70,7 +70,12 @@ class videoChainPhase(initIsm):
         """
         # TODO
         toa_dn= np.round((toa/(max_voltage-min_voltage))*((2**bit_depth)-1))
-
+        for iact in range(toa.shape[1]):
+            for ialt in range(toa.shape[0]):
+                if toa_dn[iact,ialt] > (2*bit_depth-1):
+                    toa_dn[iact,ialt] = (2*bit_depth-1)
+                if toa_dn[iact,ialt] < 0:
+                    toa_dn[iact,ialt] = 0
         # Make sure DN is not above the saturation level
         # TODO
         if np.any(toa_dn>(2*bit_depth-1)):

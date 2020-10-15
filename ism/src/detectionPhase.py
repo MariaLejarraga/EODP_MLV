@@ -105,7 +105,7 @@ class detectionPhase(initIsm):
         :return: Toa in photons
         """
         # TODO
-        Ein= toa* area_pix*tint
+        Ein= (toa*area_pix*tint)/1000
         Ephotons= (self.constants.h_planck*self.constants.speed_light)/wv
         toa_ph= Ein/Ephotons
         return toa_ph
@@ -132,29 +132,28 @@ class detectionPhase(initIsm):
         :return: toa in e- including bad & dead pixels
         """
         # TODO
-        nbad= int(np.round((bad_pix/100)*toa.shape[1]))
-        step_bad= int(np.round(100/bad_pix))
+        nbad= int((bad_pix/100)*toa.shape[1])
+        step_bad= int(100/bad_pix)
         print(step_bad)
-        idx_bad= range(0, toa.shape[1], step_bad)
+        idx_bad= range(5, toa.shape[1], step_bad)
         file= open('/home/luss/my_shared_folder/output_ism/bad_index.txt','w')
-        for seq in range(0, toa.shape[1], step_bad):
+        for seq in range(5, toa.shape[1], step_bad):
             print(seq)
             file.write(str(seq)+'\n')
         file.close()
         toa[:,idx_bad]= toa[:,idx_bad]*(1-bad_pix_red)
 
-        ndead= int(np.round((dead_pix/100)*toa.shape[1]))
-        step_dead= int(np.round(100/dead_pix))
-        print(step_dead)
-        idx_dead= range(0, toa.shape[1], step_dead)
-        file= open('/home/luss/my_shared_folder/output_ism/dead_index.txt','w')
-        for seq in range(0, toa.shape[1], step_dead):
-            print(seq)
-            file.write(str(seq)+'\n')
-        file.close()
-        toa[:,idx_dead]= toa[:,idx_dead]*(1-dead_pix_red)
-
-
+        ndead= int((dead_pix/100)*toa.shape[1])
+        if ndead!=0:
+            step_dead= int(100/dead_pix)
+            print(step_dead)
+            idx_dead= range(0, toa.shape[1], step_dead)
+            file= open('/home/luss/my_shared_folder/output_ism/dead_index.txt','w')
+            for seq in range(0, toa.shape[1], step_dead):
+                print(seq)
+                file.write(str(seq)+'\n')
+            file.close()
+            toa[:,idx_dead]= toa[:,idx_dead]*(1-dead_pix_red)
 
         return toa
 
@@ -190,14 +189,13 @@ class detectionPhase(initIsm):
         """
         # Calculate the 1D DS ACT
         # TODO
-        DSNU = np.random.normal(0, 1, toa.shape[1])*kdsnu
+        DSNU = np.abs(np.random.normal(0, 1, toa.shape[1])*kdsnu)
         ds= ds_A_coeff*((T/Tref)**3)*np.exp(-ds_B_coeff*((1/T)-(1/Tref)))
-
+        print(ds)
         self.logger.debug("Dark signal Sd " + str(ds) + " [e-]")
 
         # Apply DSNU to the input TOA
         # TODO
         for ialt in range(toa.shape[0]):
-            #DS[ialt]= ds*(1+DSNU)
             toa[ialt,:] = toa[ialt,:]+ds*(1+DSNU)
         return toa
