@@ -32,7 +32,7 @@ def writeToa(outputdir, name, toa):
 
     print("Finished writting: " + savetostr)
 
-def readToa(directory, filename):
+def readToa(directory, filename) -> object:
 
     # concatenate filename and check that it exists
     ncfile = os.path.join(directory, filename)

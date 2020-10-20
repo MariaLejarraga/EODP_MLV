@@ -1,4 +1,3 @@
-
 # INSTRUMENT MODULE
 
 from ism.src.initIsm import initIsm
@@ -7,6 +6,11 @@ from ism.src.detectionPhase import detectionPhase
 from ism.src.videoChainPhase import videoChainPhase
 from common.io.readCube import readCube
 from common.io.writeToa import writeToa
+from common.io.writeToa import readToa
+
+directory = '/home/luss/my_shared_folder/EODP_TER/EODP-TS-ISM/output/'
+filename = 'ism_toa_optical_VNIR-0.nc'
+
 
 class ism(initIsm):
 
@@ -21,8 +25,9 @@ class ism(initIsm):
         # -------------------------------------------------------------------------------
         sgm_toa, sgm_wv = readCube(self.indir, self.globalConfig.scene)
 
-        for band in self.globalConfig.bands:
+        #sgm_toa, sgm_wv = readCube(directory, filename)
 
+        for band in self.globalConfig.bands:
             self.logger.info("Start of BAND " + band)
 
             # Optical Phase
@@ -47,5 +52,3 @@ class ism(initIsm):
             self.logger.info("End of BAND " + band)
 
         self.logger.info("End of the Instrument Module!")
-
-

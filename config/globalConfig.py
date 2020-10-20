@@ -28,7 +28,7 @@ class globalConfig:
         self.ism_toa_ds = 'ism_toa_ds_' # [e-] Electrons. Intermediate output after the Detection stage - Dark signal
         self.ism_toa_detection = 'ism_toa_detection_' # [e-] Digital numbers. Intermediate output after the Detection stage (after bad/dead pix)
         self.ism_toa_vcu = 'ism_toa_vcu_' # [DN] Digital numbers. Intermediate output after the Video Control Unit
-
+        self.ism_toa_ph = 'ism_toa_ph_'
         # Name of the TOA outputs of the L1B
         self.l1b_toa = "l1b_toa_" # [mW/m2/sr] Radiances. Output of the L1B
         self.l1b_toa_eq = "l1b_toa_eq_" # [DN] TOA after equalization
