@@ -109,15 +109,20 @@ class detectionPhase(initIsm):
         toa_ph= Ein/Ephotons
         return toa_ph
 
-    def phot2Electr(self, toa_ph, QE):
+    def phot2Electr(self, toa, QE):
         """
         Conversion of photons to electrons
-        :param toa_ph: input TOA in photons [ph]
+        :param toa: input TOA in photons [ph]
         :param QE: Quantum efficiency [e-/ph]
         :return: toa in electrons
         """
-        toae= toa_ph*QE
+        toae= toa*QE
+        for iact in range(toa.shape[1]):
+            for ialt in range(toa.shape[0]):
+                if toae[ialt,iact] > (self.ismConfig.FWC):
+                    toae[ialt,iact] = self.ismConfig.FWC
         return toae
+
 
     def badDeadPixels(self, toa,bad_pix,dead_pix,bad_pix_red,dead_pix_red):
         """
