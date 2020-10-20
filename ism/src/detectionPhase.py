@@ -104,21 +104,19 @@ class detectionPhase(initIsm):
         :param wv: Central wavelength of the band [m]
         :return: Toa in photons
         """
-        # TODO
         Ein= (toa*area_pix*tint)/1000
         Ephotons= (self.constants.h_planck*self.constants.speed_light)/wv
         toa_ph= Ein/Ephotons
         return toa_ph
 
-    def phot2Electr(self, toa, QE):
+    def phot2Electr(self, toa_ph, QE):
         """
         Conversion of photons to electrons
-        :param toa: input TOA in irradiances [W/m2]
+        :param toa_ph: input TOA in photons [ph]
         :param QE: Quantum efficiency [e-/ph]
         :return: toa in electrons
         """
-        # TODO
-        toae= toa*QE
+        toae= toa_ph*QE
         return toae
 
     def badDeadPixels(self, toa,bad_pix,dead_pix,bad_pix_red,dead_pix_red):
