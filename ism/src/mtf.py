@@ -9,6 +9,7 @@ from common.plot.plotMat2D import plotMat2D
 from scipy.interpolate import interp2d
 from numpy.fft import fftshift, ifft2
 import os
+from common.io.readMat import writeMat
 
 class mtf:
     """
@@ -130,7 +131,7 @@ class mtf:
         :return: Defocus MTF
         """
         # TODO
-        x= np.pi*(defocus/(focal/D))*fr2D*(1-fr2D)
+        x= np.pi*defocus*fr2D*(1-fr2D)
         #j1= (x/2)+(x**3/16)+(x**5/384)-(x**7/18432)
         Hdefoc= (2* j1(x))/x
         return Hdefoc

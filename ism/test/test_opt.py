@@ -4,11 +4,11 @@ from common.io.writeToa import readToa
 from common.io.readMat import readMat
 #Read my toa
 myoutdir = '/home/luss/my_shared_folder/output_ism/'
-mytoa= readToa(myoutdir, "ism_toa_isrf_VNIR-0.nc")
+mytoa= readToa(myoutdir, "ism_toa_detection_VNIR-0.nc")
 
 #Read reference optical stage outputs
 refoutdir= '/home/luss/my_shared_folder/EODP_TER/EODP-TS-ISM/output/'
-reftoa= readToa(refoutdir, "ism_toa_isrf_VNIR-0.nc")
+reftoa= readToa(refoutdir, "ism_toa_detection_VNIR-0.nc")
 
 #test 1
 difftoa= np.max(np.abs(mytoa-reftoa)/reftoa)
@@ -16,7 +16,7 @@ print('difftoa=', difftoa*100)
 
 #Read my Hsys
 myoutdirHsys = '/home/luss/my_shared_folder/output_ism/'
-myHsys= readMat(myoutdirHsys, "Hsys_comprobarVNIR-0.nc")
+myHsys= readMat(myoutdirHsys, "Hsys_VNIR-0.nc")
 
 #Read reference Hsys
 refoutdirHsys= '/home/luss/my_shared_folder/Hsys/'
@@ -25,6 +25,8 @@ refHsys= readMat(refoutdirHsys, "Hsys_VNIR-0.nc")
 #test 1
 diffHsys= np.max(np.abs(myHsys-refHsys)/refHsys)
 print('diffHsys=', diffHsys*100)
+
+
 
 #test 2: Radiance to irradiance conversion factor
 # Tr*(pi/4)*(D/f)**2= 0.06318382398819589

@@ -63,7 +63,8 @@ class opticalPhase(initIsm):
                                 self.outdir, band)
 
         # Write to file the Hsys
-        writeMat(self.outdir, 'Hsys_comprobar' + band, Hsys)
+        writeMat(self.outdir, 'Hsys_' + band, Hsys)
+
 
 
         toa = self.applySysMtf(toa, Hsys) # always calculated

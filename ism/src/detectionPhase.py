@@ -141,15 +141,13 @@ class detectionPhase(initIsm):
         nbad= int((bad_pix/100)*toa.shape[1])
         step_bad= int(100/bad_pix)
         print(step_bad)
-        idx_bad= range(5, toa.shape[1], step_bad)
-        if idx_bad>nbad:
-            idx_bad.pop()
-            file= open('/home/luss/my_shared_folder/output_ism/bad_index.txt','a')
-            for seq in range(5, toa.shape[1], step_bad):
-                print(seq)
-                file.write(str(seq)+'\n')
-            file.close()
-            toa[:,idx_bad]= toa[:,idx_bad]*(1-bad_pix_red)
+        idx_bad= np.arange(5, toa.shape[1]-step_bad, step_bad)
+        file= open('/home/luss/my_shared_folder/output_ism/bad_index.txt','a')
+        for seq in range(5, toa.shape[1]-step_bad, step_bad):
+            print(seq)
+            file.write(str(seq)+'\n')
+        file.close()
+        toa[:,idx_bad]= toa[:,idx_bad]*(1-bad_pix_red)
 
         ndead= int((dead_pix/100)*toa.shape[1])
         if ndead!=0:
