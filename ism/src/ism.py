@@ -24,8 +24,7 @@ class ism(initIsm):
         # Read input TOA cube
         # -------------------------------------------------------------------------------
         sgm_toa, sgm_wv = readCube(self.indir, self.globalConfig.scene)
-
-        #sgm_toa, sgm_wv = readCube(directory, filename)
+        #sgm_toa, sgm_wv = readToa('/home/luss/my_shared_folder/EODP_TER/EODP-TS-ISM/output/','ism_toa_optical_VNIR-0.nc')
 
         for band in self.globalConfig.bands:
             self.logger.info("Start of BAND " + band)

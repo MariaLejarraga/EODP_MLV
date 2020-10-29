@@ -10,9 +10,8 @@ class detectionPhase(initIsm):
     def __init__(self, auxdir, indir, outdir):
         super().__init__(auxdir, indir, outdir)
 
-        # Initialise the random see for the PRNU and DSNU
+        # Initialise the random seed for the PRNU and DSNU
         np.random.seed(self.ismConfig.seed)
-
 
     def compute(self, toa, band):
 
@@ -143,12 +142,14 @@ class detectionPhase(initIsm):
         step_bad= int(100/bad_pix)
         print(step_bad)
         idx_bad= range(5, toa.shape[1], step_bad)
-        file= open('/home/luss/my_shared_folder/output_ism/bad_index.txt','w')
-        for seq in range(5, toa.shape[1], step_bad):
-            print(seq)
-            file.write(str(seq)+'\n')
-        file.close()
-        toa[:,idx_bad]= toa[:,idx_bad]*(1-bad_pix_red)
+        if idx_bad>nbad:
+            idx_bad.pop()
+            file= open('/home/luss/my_shared_folder/output_ism/bad_index.txt','a')
+            for seq in range(5, toa.shape[1], step_bad):
+                print(seq)
+                file.write(str(seq)+'\n')
+            file.close()
+            toa[:,idx_bad]= toa[:,idx_bad]*(1-bad_pix_red)
 
         ndead= int((dead_pix/100)*toa.shape[1])
         if ndead!=0:

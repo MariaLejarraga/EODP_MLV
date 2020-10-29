@@ -171,7 +171,7 @@ class mtf:
         # TODO
         smearAlt= np.zeros((len(fnAlt),1))
         smearAlt[:,0]= np.sinc(fnAlt*ksmear)
-        Hsmear= repmat(smearAlt, 1, ncolumns)
+        Hsmear= np.tile(smearAlt, (1, ncolumns))
         return Hsmear
 
     def mtfMotion(self, fn2D, kmotion):

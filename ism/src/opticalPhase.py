@@ -5,6 +5,7 @@ from ism.src.mtf import mtf
 from numpy.fft import fftshift, ifft2, fft2
 import numpy as np
 from common.io.writeToa import writeToa
+from common.io.readMat import writeMat
 from common.io.readIsrf import readIsrf
 from scipy.interpolate import interp1d, interp2d
 from common.plot.plotMat2D import plotMat2D
@@ -60,6 +61,10 @@ class opticalPhase(initIsm):
                                 self.ismConfig.kLF, self.ismConfig.wLF, self.ismConfig.kHF, self.ismConfig.wHF,
                                 self.ismConfig.defocus, self.ismConfig.ksmear, self.ismConfig.kmotion,
                                 self.outdir, band)
+
+        # Write to file the Hsys
+        writeMat(self.outdir, 'Hsys_comprobar' + band, Hsys)
+
 
         toa = self.applySysMtf(toa, Hsys) # always calculated
 
