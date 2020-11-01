@@ -81,7 +81,5 @@ class videoChainPhase(initIsm):
         # TODO
         if np.any(toa_dn>(2**bit_depth-1)):
             print('WRONG')
-        #np.any(toa_dn<=(2*bit_depth-1))
-         #   print(True)
         return toa_dn
 
