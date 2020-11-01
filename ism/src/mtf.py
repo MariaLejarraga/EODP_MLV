@@ -227,8 +227,10 @@ class mtf:
         savestr = directory + os.path.sep + saveas_str
         plt.savefig(savestr)
         plt.close(fig)
-        self.logger.debug("Saved image " + savestr)
-
+        act= Hsys.shape[1]
+        x=act.find(0.5)
+        Nyq= abs(Hsys[mAlt,x])
+        #print()
         # Plot cuts of the MTF ALT
         fig = plt.figure(figsize=(20,10))
         plt.plot(-fnAlt[0:mAlt], abs(Hdiff[0:mAlt,mAct]),label='Diffraction MTF')
