@@ -17,8 +17,7 @@ for i in range(4):
     diff_toa[i]= np.max(np.abs(mytoa[i]-reftoa[i])/reftoa[i])
     print('difftoa_VNIR-' + str(i) +'=', diff_toa[i]*100)
 
-#Conversion factors
-
+#test 2:Conversion factors
 class DetectionTest(initIsm):
     def __init__(self, auxdir, indir, outdir):
         super().__init__(auxdir, indir, outdir)
