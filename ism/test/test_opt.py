@@ -1,7 +1,5 @@
-import matplotlib.pyplot as plt
 import numpy as np
 from common.io.writeToa import readToa
-from common.io.readMat import readMat
 
 #My directory and reference directory
 myoutdir = '/home/luss/my_shared_folder/output_ism/'
@@ -28,17 +26,3 @@ for i in range(4):
     print('difftoa_optical_VNIR-' + str(i) +'=', diff_opt_toa[i]*100)
 
 #test 4: MTF along and across track for the central pixels in the mtf script
-
-
-#test 5:
-idalt= 50
-fig= plt.figure(figsize=(20,10))
-plt.plot(isrftoa[idalt,:], label='ISRF L1B')
-plt.plot(mytoa[idalt,:], label='My L1B')
-plt.title('L1B restored vs L1B after ISRF ', fontsize= 20)
-plt.xlabel('ACT [-]', fontsize= 16)
-plt.ylabel('Radiances [mW/m2/sr]', fontsize= 16)
-plt.grid()
-plt.legend()
-savestr = myoutdir + "/l1b_test2"
-plt.savefig(savestr)
