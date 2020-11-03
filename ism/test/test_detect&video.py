@@ -1,7 +1,6 @@
 import numpy as np
 from common.io.writeToa import readToa
 from ism.src.initIsm import initIsm
-from ism.src.ism import ism
 
 #My directory and reference directory
 myoutdir = '/home/luss/my_shared_folder/output_ism/'

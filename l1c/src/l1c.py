@@ -38,6 +38,7 @@ class l1c(initL1c):
             # -------------------------------------------------------------------------------
             writeL1c(self.outdir, self.globalConfig.l1c_toa + band, lat_l1c, lon_l1c, toa_l1c)
 
+
             self.logger.info("End of BAND " + band)
 
         self.logger.info("End of the L1C Module!")
@@ -75,7 +76,7 @@ class l1c(initL1c):
                 thistile =str(m.toMGRS(lat[ir,ic],lon[ir,ic],MGRSPrecision=self.l1cConfig.mgrs_tile_precision))
                 mgrs_tiles.add(thistile)
         mgrs_tiles = list(mgrs_tiles) # Change set to list datatype
-        mgrs_tiles= np.sort(mgrs_tiles)
+        #mgrs_tiles= np.sort(mgrs_tiles)
 
         # Initialise variables:
         #TODO
