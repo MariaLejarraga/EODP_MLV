@@ -1,7 +1,8 @@
 import numpy as np
 from common.io.writeToa import readToa
+from common.io.readMat import readMat
 
-#My directory and reference directory
+#My directory and reference directory for toa
 myoutdir = '/home/luss/my_shared_folder/output_ism/'
 refoutdir= '/home/luss/my_shared_folder/EODP_TER/EODP-TS-ISM/output/'
 
@@ -26,3 +27,4 @@ for i in range(4):
     print('difftoa_optical_VNIR-' + str(i) +'=', diff_opt_toa[i]*100)
 
 #test 4: MTF along and across track for the central pixels in the mtf script
+

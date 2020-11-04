@@ -2,6 +2,7 @@ import numpy as np
 from common.io.writeToa import readToa
 from common.io.l1cProduct import readL1c
 from operator import itemgetter
+from common.src.auxGeom import haversine
 
 #My directory and reference directory
 
@@ -32,22 +33,34 @@ for i in range(4):
     print('difftoa_VNIR-' + str(i) +'=', diff_toa[i]*100)
 
 #test 2
-for i in range(4):
+dist=[None]*(3128)
+for i in range(1):
     toa, lat, lon = readL1c(myoutdir, "l1c_toa_VNIR-" + str(i) + ".nc")
-    matr= np.zeros((len(lat),2))
-    matr[:,0]= lat
-    matr[:,1]= lon
-    sorted(matr, key= itemgetter(1))
-    
-    #lat.sort()
+    matr= np.zeros((2,len(lat)))
+    matr[0,:]= lat
+    matr[1,:]= lon
+    #sorted(matr, key= itemgetter(1))  #ordenado por longitudes
+    for k in range(len(lat)):
+        for j in range(len(lat)-1):
+            dist[j]= haversine(lat[k],lon[k],lat[j+1],lon[j+1])
+        np.sort(dist)
+        ady= min(dist)
+        dist.pop(ady)
 
-    diff_lat=[None]*(len(lat)-1)
-    for i2 in range(len(lat)-1):
-        diff_lat[i2]= lat[i2+1]-lat[i2]
+
+    print('sorted distances:', dist)
+    print('min distance', ady)
+
+    #diff_lat=[None]*(len(lat)-1)
+    #lat_ord= matr[:,0]
+    #for i2 in range(len(lat_ord)-1):
+     #   diff_lat[i2]= lat_ord[i2+1]-lat_ord[i2]
+    #print('diff set is:', diff_lat)
+
     #pos= 0
     #while pos < len(diff_lat):
      #   if diff_lat[pos] < 6e-05:
       #      diff_lat.pop(pos)
        # else: pos= pos+1
-    set(diff_lat)
-    print('diff set is:', diff_lat)
+    #set(diff_lat)
+    #print('diff set is:', diff_lat)

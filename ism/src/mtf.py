@@ -253,3 +253,8 @@ class mtf:
         # Plot 2D system MTF
         plotMat2D(Hsys, "System MTF for " +band, "ACT", "ALT", directory, "system_mtf_2d_"+band)
 
+        #Compute Nyquist frequencies
+        NFalt= np.min(np.abs(Hsys[0:mAlt,mAct]))
+        NFact= np.min(np.abs(Hsys[mAlt,0:mAct]))
+        print('NFalt=', NFalt)
+        print('NFact=', NFact)

@@ -115,7 +115,7 @@ class opticalPhase(initIsm):
         toa_fft= fft2(toa)
         Toa_mft= toa_fft*fftshift(Hsys)
         toa_ft= ifft2(Toa_mft)
-        tol= np.ones(toa_ft.shape)*1e-10
+        tol= np.ones(toa_ft.shape)*1e-3
         if (toa_ft.imag < tol).all():
             toa_ft= toa_ft.real
         return toa_ft

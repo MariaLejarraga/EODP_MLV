@@ -3,6 +3,7 @@ from ism.src.initIsm import initIsm
 import numpy as np
 from common.plot.plotMat2D import plotMat2D
 from common.plot.plotF import plotF
+from common.io.writeToa import writeToa
 
 class videoChainPhase(initIsm):
 
@@ -38,6 +39,7 @@ class videoChainPhase(initIsm):
             xlabel_str='ACT'
             ylabel_str='ALT'
             plotMat2D(toa, title_str, xlabel_str, ylabel_str, self.outdir, saveas_str)
+            writeToa(self.outdir, saveas_str, toa)
 
             idalt = int(toa.shape[0]/2)
             saveas_str = saveas_str + '_alt' + str(idalt)
