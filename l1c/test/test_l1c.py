@@ -3,6 +3,7 @@ from common.io.writeToa import readToa
 from common.io.l1cProduct import readL1c
 from operator import itemgetter
 from common.src.auxGeom import haversine
+import matplotlib.pyplot as plt
 
 #My directory and reference directory
 
@@ -32,35 +33,41 @@ for i in range(4):
     diff_toa[i]= np.max(np.abs((mytoa[i]-reftoa[i])/reftoa[i]))
     print('difftoa_VNIR-' + str(i) +'=', diff_toa[i]*100)
 
+
 #test 2
-dist=[None]*(3128)
-for i in range(1):
-    toa, lat, lon = readL1c(myoutdir, "l1c_toa_VNIR-" + str(i) + ".nc")
-    matr= np.zeros((2,len(lat)))
-    matr[0,:]= lat
-    matr[1,:]= lon
-    #sorted(matr, key= itemgetter(1))  #ordenado por longitudes
-    for k in range(len(lat)):
-        for j in range(len(lat)-1):
-            dist[j]= haversine(lat[k],lon[k],lat[j+1],lon[j+1])
-        np.sort(dist)
-        ady= min(dist)
-        dist.pop(ady)
+for band in range(4):
+    toa, lat, lon = readL1c(myoutdir, "l1c_toa_VNIR-" + str(band) + ".nc")
+    matrix=np.zeros([len(lat),2])
+    matrix[:,0]= lon
+    matrix[:,1]= lat
+    #longitude distances
+    matrix= matrix[np.argsort(matrix[:,1])]
+    dist_lon= np.zeros(len(lat))
+    for j in range(len(lat)-1):
+        dist_lon[j]= matrix[j+1,1]-matrix[j,1]
+    dist_lon[-1]= dist_lon[-2]
+    #Latitude distances
+    matrix= matrix[np.argsort(matrix[:,0])]
+    dist_lat= np.zeros(len(lat))
+    for k in range(len(lat)-1):
+        dist_lat[k]= matrix[k+1,0]-matrix[k,0]
+    dist_lat[-1]= dist_lat[-2]
+    #Distances in longitudes plot
+    fig = plt.figure(figsize=(20,10))
+    plt.plot(lat, dist_lon, 'r.', markersize=5)
+    plt.title('Differences in longitude', fontsize=20)
+    plt.xlabel('Longitude [deg]', fontsize=16)
+    plt.ylabel('Differences along longitude (deg)', fontsize=16)
+    plt.grid()
+    plt.savefig(myoutdir + 'Long_diff-VNIR' + str(band) + '.png')
+    plt.close(fig)
+    #Distances in latitudes plot
+    fig = plt.figure(figsize=(20,10))
+    plt.plot(lat, dist_lat, 'r.', markersize=5)
+    plt.title('Differences in latitude', fontsize=20)
+    plt.xlabel('Latitude [deg]', fontsize=16)
+    plt.ylabel('Differences along latitude (deg)', fontsize=16)
+    plt.grid()
+    plt.savefig(myoutdir + 'Lat_diff-VNIR' + str(band) + '.png')
+    plt.close(fig)
 
-
-    print('sorted distances:', dist)
-    print('min distance', ady)
-
-    #diff_lat=[None]*(len(lat)-1)
-    #lat_ord= matr[:,0]
-    #for i2 in range(len(lat_ord)-1):
-     #   diff_lat[i2]= lat_ord[i2+1]-lat_ord[i2]
-    #print('diff set is:', diff_lat)
-
-    #pos= 0
-    #while pos < len(diff_lat):
-     #   if diff_lat[pos] < 6e-05:
-      #      diff_lat.pop(pos)
-       # else: pos= pos+1
-    #set(diff_lat)
-    #print('diff set is:', diff_lat)
