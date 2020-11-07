@@ -33,3 +33,42 @@ plt.legend()
 savestr = myoutdir + "/test_e2e_VNIR-0"
 plt.savefig(savestr)
 plt.close(fig)
+
+idalt= 50
+fig= plt.figure(figsize=(20,10))
+plt.plot(mytoa_isrf1[idalt,:], label='TOA after isrf_VNIR-1')
+plt.plot(mytoa_l1b1[idalt,:], label='TOA after L1b_VNIR-1')
+plt.title('Comparation L1B vs ISRF TOAs', fontsize= 20)
+plt.xlabel('ACT [-]', fontsize= 16)
+plt.ylabel('Radiances [mW/m2/sr]', fontsize= 16)
+plt.grid()
+plt.legend()
+savestr = myoutdir + "/test_e2e_VNIR-1"
+plt.savefig(savestr)
+plt.close(fig)
+
+idalt= 50
+fig= plt.figure(figsize=(20,10))
+plt.plot(mytoa_isrf2[idalt,:], label='TOA after isrf_VNIR-2')
+plt.plot(mytoa_l1b2[idalt,:], label='TOA after L1b_VNIR-2')
+plt.title('Comparation L1B vs ISRF TOAs', fontsize= 20)
+plt.xlabel('ACT [-]', fontsize= 16)
+plt.ylabel('Radiances [mW/m2/sr]', fontsize= 16)
+plt.grid()
+plt.legend()
+savestr = myoutdir + "/test_e2e_VNIR-2"
+plt.savefig(savestr)
+plt.close(fig)
+
+idalt= 50
+fig= plt.figure(figsize=(20,10))
+plt.plot(mytoa_isrf3[idalt,:], label='TOA after isrf_VNIR-3')
+plt.plot(mytoa_l1b3[idalt,:], label='TOA after L1b_VNIR-3')
+plt.title('Comparation L1B vs ISRF TOAs', fontsize= 20)
+plt.xlabel('ACT [-]', fontsize= 16)
+plt.ylabel('Radiances [mW/m2/sr]', fontsize= 16)
+plt.grid()
+plt.legend()
+savestr = myoutdir + "/test_e2e_VNIR-3"
+plt.savefig(savestr)
+plt.close(fig)

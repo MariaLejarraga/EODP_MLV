@@ -11,17 +11,6 @@ myoutdir = '/home/luss/my_shared_folder/output_l1c/'
 refoutdir= '/home/luss/my_shared_folder/EODP_TER/EODP-TS-L1C/output/'
 
 #test 1
-#diff_toa= [None]*4
-#for i in range(4):
- #   mytoa, mylat, mylon = readL1c(myoutdir, "l1c_toa_VNIR-" + str(i) + ".nc")
-  #  matr= list(zip(mytoa,mylat,mylon))
-#    mytoa_ord = sorted(matr, key=lambda x:x[2])
- #   reftoa, reflat, reflon = readL1c(refoutdir, "l1c_toa_VNIR-" + str(i) + ".nc")
-  #  matr_ref= list(zip(reftoa,reflat,reflon))
-#    reftoa_ord = sorted(matr_ref, key=lambda x:x[2])
- #   diff_toa[i]= np.max(np.abs((mytoa_ord[i]-reftoa_ord[i]))
-  #  print('difftoa_VNIR-' + str(i) +'=', diff_toa[i]*100)
-
 mytoa=[None]*4
 reftoa= [None]*4
 diff_toa= [None]*4
@@ -52,6 +41,7 @@ for band in range(4):
     for k in range(len(lat)-1):
         dist_lat[k]= matrix[k+1,0]-matrix[k,0]
     dist_lat[-1]= dist_lat[-2]
+
     #Distances in longitudes plot
     fig = plt.figure(figsize=(20,10))
     plt.plot(lat, dist_lon, 'r.', markersize=5)
