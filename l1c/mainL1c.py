@@ -5,7 +5,6 @@ from l1c.src.l1c import l1c
 
 # Directory - this is the common directory for the execution of the E2E, all modules
 auxdir = '/home/luss/EODP/prueba/EODP_MLV/auxiliary/'
-#auxdir = '/home/luss/EODP/prueba/EODP_MLV/auxiliary/isrf/, /home/luss/my_shared_folder/EODP_TER/EODP-TS-E2E/'
 # GM dir + L1B dir
 #indir = '/home/luss/my_shared_folder/EODP_TER/EODP-TS-L1C/input/gm_alt100_act_150/,/home/luss/my_shared_folder/EODP_TER/EODP-TS-L1C/input/l1b_output/'
 indir = '/home/luss/EODP/eodp_gm/gm/test/ut02/output_e2e/,/home/luss/my_shared_folder/output_e2e/'
