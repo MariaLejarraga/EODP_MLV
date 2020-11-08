@@ -25,9 +25,9 @@ class detectionPhase(initIsm):
 
         self.logger.debug("TOA [0,0] " +str(toa[0,0]) + " [ph]")
 
-        if self.ismConfig.save_after_ph2e:
-            saveas_str = self.globalConfig.ism_toa_ph + band
-            writeToa(self.outdir, saveas_str, toa)
+        #if self.ismConfig.save_after_ph2e:
+          #  saveas_str = self.globalConfig.ism_toa_ph + band
+           # writeToa(self.outdir, saveas_str, toa)
 
         # Photon to electrons conversion
         # -------------------------------------------------------------------------------

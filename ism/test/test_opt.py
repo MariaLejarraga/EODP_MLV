@@ -6,7 +6,7 @@ from common.io.readMat import readMat
 myoutdir = '/home/luss/my_shared_folder/output_ism/'
 refoutdir= '/home/luss/my_shared_folder/EODP_TER/EODP-TS-ISM/output/'
 
-#test 1
+#REQ 1
 mytoa_isrf=[None]*4
 reftoa_isrf= [None]*4
 diff_isrf_toa= [None]*4
@@ -16,7 +16,7 @@ for i in range(4):
     diff_isrf_toa[i]= np.max(np.abs(mytoa_isrf[i]-reftoa_isrf[i]))
     print('difftoa_isrf_VNIR-' + str(i) +'=', diff_isrf_toa[i]*100)
 
-#test 2
+#REQ 2
 mytoa_optical=[None]*4
 reftoa_optical= [None]*4
 diff_opt_toa= [None]*4
@@ -26,5 +26,5 @@ for i in range(4):
     diff_opt_toa[i]= np.max(np.abs(mytoa_optical[i]-reftoa_optical[i]))
     print('difftoa_optical_VNIR-' + str(i) +'=', diff_opt_toa[i]*100)
 
-#test 4: MTF along and across track for the central pixels in the mtf script
+#REQ 4: MTF along and across track for the central pixels in the mtf script
 
