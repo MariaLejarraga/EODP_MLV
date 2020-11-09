@@ -6,7 +6,7 @@ from ism.src.initIsm import initIsm
 myoutdir = '/home/luss/my_shared_folder/output_ism/'
 refoutdir= '/home/luss/my_shared_folder/EODP_TER/EODP-TS-ISM/output/'
 
-#test 1
+#REQ 1
 mytoa=[None]*4
 reftoa= [None]*4
 diff_toa= [None]*4
@@ -16,7 +16,7 @@ for i in range(4):
     diff_toa[i]= np.max(np.abs(mytoa[i]-reftoa[i])/reftoa[i])
     print('difftoa_VNIR-' + str(i) +'=', diff_toa[i]*100)
 
-#test 2:Conversion factors
+#REQ 2:Conversion factors
 class DetectionTest(initIsm):
     def __init__(self, auxdir, indir, outdir):
         super().__init__(auxdir, indir, outdir)
