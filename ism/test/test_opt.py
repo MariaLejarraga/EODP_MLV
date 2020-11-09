@@ -14,7 +14,7 @@ for i in range(4):
     mytoa_isrf[i]= readToa(myoutdir, "ism_toa_isrf_VNIR-" + str(i) + ".nc")
     reftoa_isrf[i]= readToa(refoutdir, 'ism_toa_isrf_VNIR-' + str(i) + '.nc')
     diff_isrf_toa[i]= np.max(np.abs(mytoa_isrf[i]-reftoa_isrf[i]))
-    print('difftoa_isrf_VNIR-' + str(i) +'=', diff_isrf_toa[i]*100)
+    print('difftoa_isrf_VNIR-' + str(i) +'=', diff_isrf_toa[i])
 
 #REQ 2
 mytoa_optical=[None]*4
@@ -24,7 +24,7 @@ for i in range(4):
     mytoa_optical[i]= readToa(myoutdir, "ism_toa_optical_VNIR-" + str(i) + ".nc")
     reftoa_optical[i]= readToa(refoutdir, 'ism_toa_optical_VNIR-' + str(i) + '.nc')
     diff_opt_toa[i]= np.max(np.abs(mytoa_optical[i]-reftoa_optical[i]))
-    print('difftoa_optical_VNIR-' + str(i) +'=', diff_opt_toa[i]*100)
+    print('difftoa_optical_VNIR-' + str(i) +'=', diff_opt_toa[i])
 
 #REQ 4: MTF along and across track for the central pixels in the mtf script
 
