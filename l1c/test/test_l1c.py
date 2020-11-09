@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 myoutdir = '/home/luss/my_shared_folder/output_l1c/'
 refoutdir= '/home/luss/my_shared_folder/EODP_TER/EODP-TS-L1C/output/'
 
-#test 1
+#REQ 1
 mytoa=[None]*4
 reftoa= [None]*4
 diff_toa= [None]*4
@@ -23,7 +23,7 @@ for i in range(4):
     print('difftoa_VNIR-' + str(i) +'=', diff_toa[i]*100)
 
 
-#test 2
+#REQ 2
 for band in range(4):
     toa, lat, lon = readL1c(myoutdir, "l1c_toa_VNIR-" + str(band) + ".nc")
     matrix=np.zeros([len(lat),2])
