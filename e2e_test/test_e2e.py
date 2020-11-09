@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 #My directory and reference directory for toa
 myoutdir = '/home/luss/my_shared_folder/output_e2e/'
 
-#test 4
+#REQ 4
 mytoa_isrf=[None]*4
 mytoa_l1b= [None]*4
 for i in range(4):
