@@ -23,14 +23,14 @@ isrftoa1= readToa(isrfdir, "ism_toa_isrf_VNIR-1.nc")
 isrftoa2= readToa(isrfdir, "ism_toa_isrf_VNIR-2.nc")
 isrftoa3= readToa(isrfdir, "ism_toa_isrf_VNIR-3.nc")
 
-# Read no equalizator toa
+# Read no equalization toa
 noeqdir= '/home/luss/my_shared_folder/output_l1b/noeq'
 noeqtoa0= readToa(noeqdir, "l1b_toa_VNIR-0.nc")
 noeqtoa1= readToa(noeqdir, "l1b_toa_VNIR-1.nc")
 noeqtoa2= readToa(noeqdir, "l1b_toa_VNIR-2.nc")
 noeqtoa3= readToa(noeqdir, "l1b_toa_VNIR-3.nc")
 
-#test 1
+#REQ 1
 difftoa0= np.max(np.abs(mytoa0-reftoa0)/reftoa0)
 difftoa1= np.max(np.abs(mytoa1-reftoa1)/reftoa1)
 difftoa2= np.max(np.abs(mytoa2-reftoa2)/reftoa2)
@@ -40,7 +40,7 @@ print('difftoa_VNIR-1=', difftoa1*100)
 print('difftoa_VNIR-2=', difftoa2*100)
 print('difftoa_VNIR-3=', difftoa3*100)
 
-#test 2:PLOTS
+#REQ 2:PLOTS
 #band 0
 idalt= 50
 fig= plt.figure(figsize=(20,10))
@@ -97,7 +97,7 @@ savestr = myoutdir + "/l1b_test2_VNIR-3"
 plt.savefig(savestr)
 plt.close(fig)
 
-#test 3:PLOTS
+#REQ 3:PLOTS
 #band 0
 fig= plt.figure(figsize=(20,10))
 plt.plot(noeqtoa0[idalt,:], label='No eq L1B_VNIR-0')
